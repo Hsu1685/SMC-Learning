@@ -1,0 +1,43 @@
+%start WeekMap::Sunday
+%class Week
+%header week.h
+
+%map WeekMap
+%%
+// State    Transition              Next State      Action(s)
+Sunday
+{
+            NextDay     Monday     {DoingMonday();}
+}
+
+Monday
+{
+            NextDay     Tuesday     {DoingTuesday();}
+}
+
+Tuesday
+{
+            NextDay     Wednesday     {DoingWednesday();}
+}
+
+Wednesday
+{
+            NextDay     Thrsday     {DoingThrsday();}
+}
+
+Thrsday
+{
+            NextDay     Friday     {DoingFriday();}
+}
+
+Friday
+{
+            NextDay     Saturday     {DoingSaturday();}
+}
+
+Saturday
+{
+            NextDay     Sunday     {DoingSunday();}
+}
+
+%%

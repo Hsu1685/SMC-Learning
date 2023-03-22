@@ -1,0 +1,48 @@
+digraph stoplight {
+
+    node
+        [shape=Mrecord width=1.5];
+
+    subgraph cluster_StopMap {
+
+        label="StopMap";
+
+        //
+        // States (Nodes)
+        //
+
+        "StopMap::EastWestGreen"
+            [label="{EastWestGreen}"];
+
+        "StopMap::EastWestYellow"
+            [label="{EastWestYellow}"];
+
+        "StopMap::NorthSouthGreen"
+            [label="{NorthSouthGreen}"];
+
+        "StopMap::NorthSouthYellow"
+            [label="{NorthSouthYellow}"];
+
+        "%start"
+            [label="" shape=circle style=filled fillcolor=black width=0.25];
+
+        //
+        // Transitions (Edges)
+        //
+
+        "StopMap::EastWestGreen" -> "StopMap::EastWestYellow"
+            [label="Timeout()/\lTurnLight(EWLIGHT, YELLOW);\lSetTimer(YellowTimer);\l"];
+
+        "StopMap::EastWestYellow" -> "StopMap::NorthSouthGreen"
+            [label="Timeout()/\lTurnLight(EWLIGHT, RED);\lTurnLight(NSLIGHT, GREEN);\lSetTimer(NSGreenTimer);\l"];
+
+        "StopMap::NorthSouthGreen" -> "StopMap::NorthSouthYellow"
+            [label="Timeout()/\lTurnLight(NSLIGHT, YELLOW);\lSetTimer(YellowTimer);\l"];
+
+        "StopMap::NorthSouthYellow" -> "StopMap::EastWestGreen"
+            [label="Timeout()/\lTurnLight(NSLIGHT, RED);\lTurnLight(EWLIGHT, GREEN);\lSetTimer(EWGreenTimer);\l"];
+
+        "%start" -> "StopMap::NorthSouthGreen"
+    }
+
+}

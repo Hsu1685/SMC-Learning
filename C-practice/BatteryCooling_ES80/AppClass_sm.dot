@@ -1,0 +1,239 @@
+digraph AppClass {
+
+    node
+        [shape=Mrecord width=1.5];
+
+    subgraph cluster_StartMap {
+
+        label="StartMap";
+
+        //
+        // States (Nodes)
+        //
+
+        "StartMap::PushIt"
+            [label="{PushIt}"];
+
+        "StartMap::PopIt"
+            [label="{PopIt}"];
+
+        "StartMap::Acceptable"
+            [label="{Acceptable}"];
+
+        "StartMap::Unacceptable"
+            [label="{Unacceptable}"];
+
+        "StartMap::PushIt::ZerosMap"
+            [label="{ZerosMap|O-O\r}"]
+
+        "StartMap::PushIt::OnesMap"
+            [label="{OnesMap|O-O\r}"]
+
+        "%start"
+            [label="" shape=circle style=filled fillcolor=black width=0.25];
+
+        //
+        // Transitions (Edges)
+        //
+
+        "StartMap::PushIt" -> "StartMap::PushIt::ZerosMap"
+            [label="Zero/\lpush(ZerosMap::PushIt)\l"];
+
+        "StartMap::PushIt" -> "StartMap::PushIt::OnesMap"
+            [label="One/\lpush(OnesMap::PushIt)\l"];
+
+        "StartMap::PushIt" -> "StartMap::PopIt"
+            [label="C/\l"];
+
+        "StartMap::PushIt" -> "StartMap::PopIt"
+            [label="OK/\l"];
+
+        "StartMap::PushIt" -> "StartMap::Unacceptable"
+            [label="Error/\l"];
+
+        "StartMap::PushIt" -> "StartMap::Unacceptable"
+            [label="EOS/\l"];
+
+        "StartMap::PushIt" -> "StartMap::Unacceptable"
+            [label="Unknown/\l"];
+
+        "StartMap::PopIt" -> "StartMap::Acceptable"
+            [label="EOS/\l"];
+
+        "StartMap::PopIt" -> "StartMap::Unacceptable"
+            [label="Default/\l"];
+
+        "StartMap::Acceptable" -> "StartMap::Unacceptable"
+            [label="EOS/\l"];
+
+        "StartMap::Acceptable" -> "StartMap::Unacceptable"
+            [label="Unknown/\l"];
+
+        "StartMap::PushIt::ZerosMap" -> "StartMap::PushIt"
+            [label="pop/"]
+
+        "StartMap::PushIt::OnesMap" -> "StartMap::PushIt"
+            [label="pop/"]
+
+        "%start" -> "StartMap::PushIt"
+    }
+
+    subgraph cluster_ZerosMap {
+
+        label="ZerosMap";
+
+        //
+        // States (Nodes)
+        //
+
+        "ZerosMap::PushIt"
+            [label="{PushIt}"];
+
+        "ZerosMap::PopIt"
+            [label="{PopIt}"];
+
+        "ZerosMap::pop(Error)"
+            [label="" width=1]
+
+        "ZerosMap::pop(OK)"
+            [label="" width=1]
+
+        "ZerosMap::%end"
+            [label="" shape=doublecircle style=filled fillcolor=black width=0.15];
+
+        "ZerosMap::PushIt::ZerosMap"
+            [label="{ZerosMap|O-O\r}"]
+
+        "ZerosMap::PushIt::OnesMap"
+            [label="{OnesMap|O-O\r}"]
+
+        "push(ZerosMap::PushIt)"
+            [label="" shape=plaintext];
+
+        //
+        // Transitions (Edges)
+        //
+
+        "ZerosMap::PushIt" -> "ZerosMap::PushIt::ZerosMap"
+            [label="Zero/\lpush(PushIt)\l"];
+
+        "ZerosMap::PushIt" -> "ZerosMap::PushIt::OnesMap"
+            [label="One/\lpush(OnesMap::PushIt)\l"];
+
+        "ZerosMap::PushIt" -> "ZerosMap::PopIt"
+            [label="C/\l"];
+
+        "ZerosMap::PushIt" -> "ZerosMap::PopIt"
+            [label="OK/\l"];
+
+        "ZerosMap::PushIt" -> "StartMap::Unacceptable"
+            [label="Error/\l"];
+
+        "ZerosMap::PushIt" -> "StartMap::Unacceptable"
+            [label="EOS/\l"];
+
+        "ZerosMap::PushIt" -> "StartMap::Unacceptable"
+            [label="Unknown/\l"];
+
+        "ZerosMap::PopIt" -> "ZerosMap::pop(OK)"
+            [label="Zero/\l"];
+
+        "ZerosMap::PopIt" -> "ZerosMap::pop(Error)"
+            [label="Default/\l"];
+
+        "ZerosMap::pop(Error)" -> "ZerosMap::%end"
+            [label="pop(Error);\l"];
+
+        "ZerosMap::pop(OK)" -> "ZerosMap::%end"
+            [label="pop(OK);\l"];
+
+        "ZerosMap::PushIt::ZerosMap" -> "ZerosMap::PushIt"
+            [label="pop/"]
+
+        "ZerosMap::PushIt::OnesMap" -> "ZerosMap::PushIt"
+            [label="pop/"]
+
+        "push(ZerosMap::PushIt)" -> "ZerosMap::PushIt"
+            [arrowtail=odot];
+    }
+
+    subgraph cluster_OnesMap {
+
+        label="OnesMap";
+
+        //
+        // States (Nodes)
+        //
+
+        "OnesMap::PushIt"
+            [label="{PushIt}"];
+
+        "OnesMap::PopIt"
+            [label="{PopIt}"];
+
+        "OnesMap::pop(Error)"
+            [label="" width=1]
+
+        "OnesMap::pop(OK)"
+            [label="" width=1]
+
+        "OnesMap::%end"
+            [label="" shape=doublecircle style=filled fillcolor=black width=0.15];
+
+        "OnesMap::PushIt::OnesMap"
+            [label="{OnesMap|O-O\r}"]
+
+        "OnesMap::PushIt::ZerosMap"
+            [label="{ZerosMap|O-O\r}"]
+
+        "push(OnesMap::PushIt)"
+            [label="" shape=plaintext];
+
+        //
+        // Transitions (Edges)
+        //
+
+        "OnesMap::PushIt" -> "OnesMap::PushIt::ZerosMap"
+            [label="Zero/\lpush(ZerosMap::PushIt)\l"];
+
+        "OnesMap::PushIt" -> "OnesMap::PushIt::OnesMap"
+            [label="One/\lpush(PushIt)\l"];
+
+        "OnesMap::PushIt" -> "OnesMap::PopIt"
+            [label="C/\l"];
+
+        "OnesMap::PushIt" -> "OnesMap::PopIt"
+            [label="OK/\l"];
+
+        "OnesMap::PushIt" -> "StartMap::Unacceptable"
+            [label="Error/\l"];
+
+        "OnesMap::PushIt" -> "StartMap::Unacceptable"
+            [label="EOS/\l"];
+
+        "OnesMap::PushIt" -> "StartMap::Unacceptable"
+            [label="Unknown/\l"];
+
+        "OnesMap::PopIt" -> "OnesMap::pop(OK)"
+            [label="One/\l"];
+
+        "OnesMap::PopIt" -> "OnesMap::pop(Error)"
+            [label="Default/\l"];
+
+        "OnesMap::pop(Error)" -> "OnesMap::%end"
+            [label="pop(Error);\l"];
+
+        "OnesMap::pop(OK)" -> "OnesMap::%end"
+            [label="pop(OK);\l"];
+
+        "OnesMap::PushIt::OnesMap" -> "OnesMap::PushIt"
+            [label="pop/"]
+
+        "OnesMap::PushIt::ZerosMap" -> "OnesMap::PushIt"
+            [label="pop/"]
+
+        "push(OnesMap::PushIt)" -> "OnesMap::PushIt"
+            [arrowtail=odot];
+    }
+
+}

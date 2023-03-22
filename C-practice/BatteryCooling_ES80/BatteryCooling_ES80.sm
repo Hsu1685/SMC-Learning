@@ -1,0 +1,49 @@
+// 這2個Map名稱要一致
+%start BatteryCoolingMap::Idle
+// 狀態機名稱
+%class BatteryCooling_ES80
+// 狀態機標頭黨
+%header BatteryCooling_ES80.h
+
+// 這2個Map名稱要一致
+%map BatteryCoolingMap
+%%
+// State    Transition              Next State              Action(s)
+Idle
+{
+            Switch_2DrivingMode     DrivingMode             {ModeOperation(DRIVING);}
+            Switch_2ChargingMode    ChargingMode            {ModeOperation(CHARGING);}
+            Back_2Idle              Idle                    {ModeOperation(IDLE);}
+}
+
+DrivingMode
+{
+            Back_2Idle              Idle                    {ModeOperation(IDLE);}
+            Switch_2DrivingMode     DrivingMode             {ModeOperation(DRIVING);}
+            Switch_2ChargingMode    ChargingMode            {ModeOperation(CHARGING);}
+            Run                     RunningDrivingCooling   {CoolingOperation(DRIVING);}
+}
+
+ChargingMode
+{
+            Back_2Idle              Idle                    {ModeOperation(IDLE);}
+            Switch_2ChargingMode    ChargingMode            {ModeOperation(CHARGING);}
+            Switch_2DrivingMode     DrivingMode             {ModeOperation(DRIVING);}
+            Run                     RunningChargingCooling  {CoolingOperation(CHARGING);}
+}
+
+RunningDrivingCooling
+{
+            Run                     RunningDrivingCooling   {CoolingOperation(DRIVING);}
+            Stop                    DrivingMode             {ModeOperation(DRIVING);}
+            Back_2Idle              Idle                    {ModeOperation(IDLE);}
+}
+
+RunningChargingCooling
+{
+            Run                     RunningChargingCooling  {CoolingOperation(CHARGING);}
+            Stop                    ChargingMode            {ModeOperation(CHARGING);}
+            Back_2Idle              Idle                    {ModeOperation(IDLE);}
+}
+
+%%

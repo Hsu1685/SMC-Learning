@@ -1,0 +1,66 @@
+digraph week {
+
+    node
+        [shape=Mrecord width=1.5];
+
+    subgraph cluster_WeekMap {
+
+        label="WeekMap";
+
+        //
+        // States (Nodes)
+        //
+
+        "WeekMap::Sunday"
+            [label="{Sunday}"];
+
+        "WeekMap::Monday"
+            [label="{Monday}"];
+
+        "WeekMap::Tuesday"
+            [label="{Tuesday}"];
+
+        "WeekMap::Wednesday"
+            [label="{Wednesday}"];
+
+        "WeekMap::Thrsday"
+            [label="{Thrsday}"];
+
+        "WeekMap::Friday"
+            [label="{Friday}"];
+
+        "WeekMap::Saturday"
+            [label="{Saturday}"];
+
+        "%start"
+            [label="" shape=circle style=filled fillcolor=black width=0.25];
+
+        //
+        // Transitions (Edges)
+        //
+
+        "WeekMap::Sunday" -> "WeekMap::Monday"
+            [label="NextDay()/\lDoingMonday();\l"];
+
+        "WeekMap::Monday" -> "WeekMap::Tuesday"
+            [label="NextDay()/\lDoingTuesday();\l"];
+
+        "WeekMap::Tuesday" -> "WeekMap::Wednesday"
+            [label="NextDay()/\lDoingWednesday();\l"];
+
+        "WeekMap::Wednesday" -> "WeekMap::Thrsday"
+            [label="NextDay()/\lDoingThrsday();\l"];
+
+        "WeekMap::Thrsday" -> "WeekMap::Friday"
+            [label="NextDay()/\lDoingFriday();\l"];
+
+        "WeekMap::Friday" -> "WeekMap::Saturday"
+            [label="NextDay()/\lDoingSaturday();\l"];
+
+        "WeekMap::Saturday" -> "WeekMap::Sunday"
+            [label="NextDay()/\lDoingSunday();\l"];
+
+        "%start" -> "WeekMap::Sunday"
+    }
+
+}
