@@ -7,3 +7,7 @@ This repo contains my learning journey and exercises on State Machine Compiler (
 - [State Machine Compiler 用法：使用 SMC 工具自动生成状态机代码](https://blog.csdn.net/Qidi_Huang/article/details/112101525)
 - [状态机生成工具——SMC](https://blog.csdn.net/m0_37567543/article/details/78673097)
 - [SMC - 状态机代码生成工具](https://blog.csdn.net/weixin_44462773/article/details/123089749)
+
+## 資料夾說明
+- [ref] 內有官方網站上的相關資料
+- [C-practice] 內有可在Windows上執行的C語言範例
