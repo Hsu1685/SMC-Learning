@@ -9,7 +9,7 @@
 #define _WEEK_SM_H
 
 #include <assert.h>
-#include "statemap.h"
+#include <statemap.h>
 
 
 struct Week;
