@@ -47,11 +47,9 @@ static void BatteryCooling_ES80State_Default(struct BatteryCooling_ES80Context *
 #define BatteryCoolingMap_DrivingMode_Default BatteryCooling_ES80State_Default
 #define BatteryCoolingMap_ChargingMode_Stop BatteryCooling_ES80State_Stop
 #define BatteryCoolingMap_ChargingMode_Default BatteryCooling_ES80State_Default
-#define BatteryCoolingMap_RunningDrivingCooling_Switch_2ChargingMode BatteryCooling_ES80State_Switch_2ChargingMode
 #define BatteryCoolingMap_RunningDrivingCooling_Switch_2DrivingMode BatteryCooling_ES80State_Switch_2DrivingMode
 #define BatteryCoolingMap_RunningDrivingCooling_Default BatteryCooling_ES80State_Default
 #define BatteryCoolingMap_RunningChargingCooling_Switch_2ChargingMode BatteryCooling_ES80State_Switch_2ChargingMode
-#define BatteryCoolingMap_RunningChargingCooling_Switch_2DrivingMode BatteryCooling_ES80State_Switch_2DrivingMode
 #define BatteryCoolingMap_RunningChargingCooling_Default BatteryCooling_ES80State_Default
 #define BatteryCoolingMap_DefaultState_Back_2Idle BatteryCooling_ES80State_Back_2Idle
 #define BatteryCoolingMap_DefaultState_Run BatteryCooling_ES80State_Run
@@ -61,10 +59,11 @@ static void BatteryCooling_ES80State_Default(struct BatteryCooling_ES80Context *
 static void BatteryCoolingMap_Idle_Back_2Idle(struct BatteryCooling_ES80Context *const fsm)
 {
     struct BatteryCooling_ES80 *ctxt = getOwner(fsm);
+    const struct BatteryCooling_ES80State* EndStateName = getState(fsm);
 
     clearState(fsm);
     BatteryCooling_ES80_ModeOperation(ctxt, IDLE);
-    setState(fsm, &BatteryCoolingMap_Idle);
+    setState(fsm, EndStateName);
 
 }
 static void BatteryCoolingMap_Idle_Switch_2ChargingMode(struct BatteryCooling_ES80Context *const fsm)
@@ -125,10 +124,11 @@ static void BatteryCoolingMap_DrivingMode_Switch_2ChargingMode(struct BatteryCoo
 static void BatteryCoolingMap_DrivingMode_Switch_2DrivingMode(struct BatteryCooling_ES80Context *const fsm)
 {
     struct BatteryCooling_ES80 *ctxt = getOwner(fsm);
+    const struct BatteryCooling_ES80State* EndStateName = getState(fsm);
 
     clearState(fsm);
     BatteryCooling_ES80_ModeOperation(ctxt, DRIVING);
-    setState(fsm, &BatteryCoolingMap_DrivingMode);
+    setState(fsm, EndStateName);
 
 }
 
@@ -162,10 +162,11 @@ static void BatteryCoolingMap_ChargingMode_Run(struct BatteryCooling_ES80Context
 static void BatteryCoolingMap_ChargingMode_Switch_2ChargingMode(struct BatteryCooling_ES80Context *const fsm)
 {
     struct BatteryCooling_ES80 *ctxt = getOwner(fsm);
+    const struct BatteryCooling_ES80State* EndStateName = getState(fsm);
 
     clearState(fsm);
     BatteryCooling_ES80_ModeOperation(ctxt, CHARGING);
-    setState(fsm, &BatteryCoolingMap_ChargingMode);
+    setState(fsm, EndStateName);
 
 }
 static void BatteryCoolingMap_ChargingMode_Switch_2DrivingMode(struct BatteryCooling_ES80Context *const fsm)
@@ -199,10 +200,11 @@ static void BatteryCoolingMap_RunningDrivingCooling_Back_2Idle(struct BatteryCoo
 static void BatteryCoolingMap_RunningDrivingCooling_Run(struct BatteryCooling_ES80Context *const fsm)
 {
     struct BatteryCooling_ES80 *ctxt = getOwner(fsm);
+    const struct BatteryCooling_ES80State* EndStateName = getState(fsm);
 
     clearState(fsm);
     BatteryCooling_ES80_CoolingOperation(ctxt, DRIVING);
-    setState(fsm, &BatteryCoolingMap_RunningDrivingCooling);
+    setState(fsm, EndStateName);
 
 }
 static void BatteryCoolingMap_RunningDrivingCooling_Stop(struct BatteryCooling_ES80Context *const fsm)
@@ -212,6 +214,15 @@ static void BatteryCoolingMap_RunningDrivingCooling_Stop(struct BatteryCooling_E
     clearState(fsm);
     BatteryCooling_ES80_ModeOperation(ctxt, DRIVING);
     setState(fsm, &BatteryCoolingMap_DrivingMode);
+
+}
+static void BatteryCoolingMap_RunningDrivingCooling_Switch_2ChargingMode(struct BatteryCooling_ES80Context *const fsm)
+{
+    struct BatteryCooling_ES80 *ctxt = getOwner(fsm);
+
+    clearState(fsm);
+    BatteryCooling_ES80_ModeOperation(ctxt, CHARGING);
+    setState(fsm, &BatteryCoolingMap_ChargingMode);
 
 }
 
@@ -236,10 +247,11 @@ static void BatteryCoolingMap_RunningChargingCooling_Back_2Idle(struct BatteryCo
 static void BatteryCoolingMap_RunningChargingCooling_Run(struct BatteryCooling_ES80Context *const fsm)
 {
     struct BatteryCooling_ES80 *ctxt = getOwner(fsm);
+    const struct BatteryCooling_ES80State* EndStateName = getState(fsm);
 
     clearState(fsm);
     BatteryCooling_ES80_CoolingOperation(ctxt, CHARGING);
-    setState(fsm, &BatteryCoolingMap_RunningChargingCooling);
+    setState(fsm, EndStateName);
 
 }
 static void BatteryCoolingMap_RunningChargingCooling_Stop(struct BatteryCooling_ES80Context *const fsm)
@@ -249,6 +261,15 @@ static void BatteryCoolingMap_RunningChargingCooling_Stop(struct BatteryCooling_
     clearState(fsm);
     BatteryCooling_ES80_ModeOperation(ctxt, CHARGING);
     setState(fsm, &BatteryCoolingMap_ChargingMode);
+
+}
+static void BatteryCoolingMap_RunningChargingCooling_Switch_2DrivingMode(struct BatteryCooling_ES80Context *const fsm)
+{
+    struct BatteryCooling_ES80 *ctxt = getOwner(fsm);
+
+    clearState(fsm);
+    BatteryCooling_ES80_ModeOperation(ctxt, DRIVING);
+    setState(fsm, &BatteryCoolingMap_DrivingMode);
 
 }
 

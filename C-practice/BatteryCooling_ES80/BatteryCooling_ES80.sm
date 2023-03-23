@@ -13,13 +13,13 @@ Idle
 {
             Switch_2DrivingMode     DrivingMode             {ModeOperation(DRIVING);}
             Switch_2ChargingMode    ChargingMode            {ModeOperation(CHARGING);}
-            Back_2Idle              Idle                    {ModeOperation(IDLE);}
+            Back_2Idle              nil                     {ModeOperation(IDLE);}
 }
 
 DrivingMode
 {
             Back_2Idle              Idle                    {ModeOperation(IDLE);}
-            Switch_2DrivingMode     DrivingMode             {ModeOperation(DRIVING);}
+            Switch_2DrivingMode     nil                     {ModeOperation(DRIVING);}
             Switch_2ChargingMode    ChargingMode            {ModeOperation(CHARGING);}
             Run                     RunningDrivingCooling   {CoolingOperation(DRIVING);}
 }
@@ -27,23 +27,25 @@ DrivingMode
 ChargingMode
 {
             Back_2Idle              Idle                    {ModeOperation(IDLE);}
-            Switch_2ChargingMode    ChargingMode            {ModeOperation(CHARGING);}
+            Switch_2ChargingMode    nil                     {ModeOperation(CHARGING);}
             Switch_2DrivingMode     DrivingMode             {ModeOperation(DRIVING);}
             Run                     RunningChargingCooling  {CoolingOperation(CHARGING);}
 }
 
 RunningDrivingCooling
 {
-            Run                     RunningDrivingCooling   {CoolingOperation(DRIVING);}
+            Run                     nil                     {CoolingOperation(DRIVING);}
             Stop                    DrivingMode             {ModeOperation(DRIVING);}
             Back_2Idle              Idle                    {ModeOperation(IDLE);}
+            Switch_2ChargingMode    ChargingMode            {ModeOperation(CHARGING);}
 }
 
 RunningChargingCooling
 {
-            Run                     RunningChargingCooling  {CoolingOperation(CHARGING);}
+            Run                     nil                     {CoolingOperation(CHARGING);}
             Stop                    ChargingMode            {ModeOperation(CHARGING);}
             Back_2Idle              Idle                    {ModeOperation(IDLE);}
+            Switch_2DrivingMode     DrivingMode             {ModeOperation(DRIVING);}
 }
 
 %%
