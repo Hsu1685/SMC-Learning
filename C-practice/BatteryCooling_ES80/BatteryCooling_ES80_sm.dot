@@ -20,8 +20,14 @@ digraph BatteryCooling_ES80 {
         "BatteryCoolingMap::ChargingMode"
             [label="{ChargingMode|Switch_2ChargingMode()/\l&nbsp;&nbsp;&nbsp;ModeOperation(CHARGING);\l}"];
 
+        "BatteryCoolingMap::DrivingCoolingReady"
+            [label="{DrivingCoolingReady}"];
+
         "BatteryCoolingMap::RunningDrivingCooling"
             [label="{RunningDrivingCooling|Run()/\l&nbsp;&nbsp;&nbsp;CoolingOperation(DRIVING);\l}"];
+
+        "BatteryCoolingMap::ChargingCoolingReady"
+            [label="{ChargingCoolingReady}"];
 
         "BatteryCoolingMap::RunningChargingCooling"
             [label="{RunningChargingCooling|Run()/\l&nbsp;&nbsp;&nbsp;CoolingOperation(CHARGING);\l}"];
@@ -45,8 +51,8 @@ digraph BatteryCooling_ES80 {
         "BatteryCoolingMap::DrivingMode" -> "BatteryCoolingMap::ChargingMode"
             [label="Switch_2ChargingMode()/\lModeOperation(CHARGING);\l"];
 
-        "BatteryCoolingMap::DrivingMode" -> "BatteryCoolingMap::RunningDrivingCooling"
-            [label="Run()/\lCoolingOperation(DRIVING);\l"];
+        "BatteryCoolingMap::DrivingMode" -> "BatteryCoolingMap::DrivingCoolingReady"
+            [label="Ready()/\l"];
 
         "BatteryCoolingMap::ChargingMode" -> "BatteryCoolingMap::Idle"
             [label="Back_2Idle()/\lModeOperation(IDLE);\l"];
@@ -54,11 +60,20 @@ digraph BatteryCooling_ES80 {
         "BatteryCoolingMap::ChargingMode" -> "BatteryCoolingMap::DrivingMode"
             [label="Switch_2DrivingMode()/\lModeOperation(DRIVING);\l"];
 
-        "BatteryCoolingMap::ChargingMode" -> "BatteryCoolingMap::RunningChargingCooling"
-            [label="Run()/\lCoolingOperation(CHARGING);\l"];
+        "BatteryCoolingMap::ChargingMode" -> "BatteryCoolingMap::ChargingCoolingReady"
+            [label="Ready()/\l"];
 
-        "BatteryCoolingMap::RunningDrivingCooling" -> "BatteryCoolingMap::DrivingMode"
-            [label="Stop()/\lModeOperation(DRIVING);\l"];
+        "BatteryCoolingMap::DrivingCoolingReady" -> "BatteryCoolingMap::RunningDrivingCooling"
+            [label="Run()/\lCoolingOperation(DRIVING);\l"];
+
+        "BatteryCoolingMap::DrivingCoolingReady" -> "BatteryCoolingMap::Idle"
+            [label="Back_2Idle()/\lModeOperation(IDLE);\l"];
+
+        "BatteryCoolingMap::DrivingCoolingReady" -> "BatteryCoolingMap::ChargingMode"
+            [label="Switch_2ChargingMode()/\lModeOperation(CHARGING);\l"];
+
+        "BatteryCoolingMap::RunningDrivingCooling" -> "BatteryCoolingMap::DrivingCoolingReady"
+            [label="Stop()/\lStopOperation();\l"];
 
         "BatteryCoolingMap::RunningDrivingCooling" -> "BatteryCoolingMap::Idle"
             [label="Back_2Idle()/\lModeOperation(IDLE);\l"];
@@ -66,8 +81,17 @@ digraph BatteryCooling_ES80 {
         "BatteryCoolingMap::RunningDrivingCooling" -> "BatteryCoolingMap::ChargingMode"
             [label="Switch_2ChargingMode()/\lModeOperation(CHARGING);\l"];
 
-        "BatteryCoolingMap::RunningChargingCooling" -> "BatteryCoolingMap::ChargingMode"
-            [label="Stop()/\lModeOperation(CHARGING);\l"];
+        "BatteryCoolingMap::ChargingCoolingReady" -> "BatteryCoolingMap::RunningChargingCooling"
+            [label="Run()/\lCoolingOperation(CHARGING);\l"];
+
+        "BatteryCoolingMap::ChargingCoolingReady" -> "BatteryCoolingMap::Idle"
+            [label="Back_2Idle()/\lModeOperation(IDLE);\l"];
+
+        "BatteryCoolingMap::ChargingCoolingReady" -> "BatteryCoolingMap::DrivingMode"
+            [label="Switch_2DrivingMode()/\lModeOperation(DRIVING);\l"];
+
+        "BatteryCoolingMap::RunningChargingCooling" -> "BatteryCoolingMap::ChargingCoolingReady"
+            [label="Stop()/\lStopOperation();\l"];
 
         "BatteryCoolingMap::RunningChargingCooling" -> "BatteryCoolingMap::Idle"
             [label="Back_2Idle()/\lModeOperation(IDLE);\l"];

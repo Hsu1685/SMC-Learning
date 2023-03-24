@@ -17,6 +17,7 @@ struct BatteryCooling_ES80Context;
 
 struct BatteryCooling_ES80State {
     void(*Back_2Idle)(struct BatteryCooling_ES80Context *const fsm);
+    void(*Ready)(struct BatteryCooling_ES80Context *const fsm);
     void(*Run)(struct BatteryCooling_ES80Context *const fsm);
     void(*Stop)(struct BatteryCooling_ES80Context *const fsm);
     void(*Switch_2ChargingMode)(struct BatteryCooling_ES80Context *const fsm);
@@ -28,7 +29,9 @@ struct BatteryCooling_ES80State {
 extern const struct BatteryCooling_ES80State BatteryCoolingMap_Idle;
 extern const struct BatteryCooling_ES80State BatteryCoolingMap_DrivingMode;
 extern const struct BatteryCooling_ES80State BatteryCoolingMap_ChargingMode;
+extern const struct BatteryCooling_ES80State BatteryCoolingMap_DrivingCoolingReady;
 extern const struct BatteryCooling_ES80State BatteryCoolingMap_RunningDrivingCooling;
+extern const struct BatteryCooling_ES80State BatteryCoolingMap_ChargingCoolingReady;
 extern const struct BatteryCooling_ES80State BatteryCoolingMap_RunningChargingCooling;
 
 struct BatteryCooling_ES80Context {
@@ -39,6 +42,7 @@ struct BatteryCooling_ES80Context {
 #ifdef NO_BATTERYCOOLING_ES80_SM_MACRO
 extern void BatteryCooling_ES80Context_Init(struct BatteryCooling_ES80Context *const fsm, struct BatteryCooling_ES80 *const owner);
 extern void BatteryCooling_ES80Context_Back_2Idle(struct BatteryCooling_ES80Context *const fsm);
+extern void BatteryCooling_ES80Context_Ready(struct BatteryCooling_ES80Context *const fsm);
 extern void BatteryCooling_ES80Context_Run(struct BatteryCooling_ES80Context *const fsm);
 extern void BatteryCooling_ES80Context_Stop(struct BatteryCooling_ES80Context *const fsm);
 extern void BatteryCooling_ES80Context_Switch_2ChargingMode(struct BatteryCooling_ES80Context *const fsm);
@@ -52,6 +56,12 @@ extern void BatteryCooling_ES80Context_Switch_2DrivingMode(struct BatteryCooling
     assert(getState(fsm) != NULL); \
     setTransition((fsm), "Back_2Idle"); \
     getState(fsm)->Back_2Idle((fsm)); \
+    setTransition((fsm), NULL)
+
+#define BatteryCooling_ES80Context_Ready(fsm) \
+    assert(getState(fsm) != NULL); \
+    setTransition((fsm), "Ready"); \
+    getState(fsm)->Ready((fsm)); \
     setTransition((fsm), NULL)
 
 #define BatteryCooling_ES80Context_Run(fsm) \
