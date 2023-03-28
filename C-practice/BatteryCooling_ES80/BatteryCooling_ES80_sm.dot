@@ -12,25 +12,25 @@ digraph BatteryCooling_ES80 {
         //
 
         "BatteryCoolingMap::Idle"
-            [label="{Idle|Back_2Idle()/\l&nbsp;&nbsp;&nbsp;ModeOperation(IDLE);\l}"];
+            [label="{Idle|Back_2Idle()/\l&nbsp;&nbsp;&nbsp;ModeOperation(IDLE);\l}", style=filled , fillcolor=lavender];
 
         "BatteryCoolingMap::DrivingMode"
-            [label="{DrivingMode|Switch_2DrivingMode()/\l&nbsp;&nbsp;&nbsp;ModeOperation(DRIVING);\l}"];
+            [label="{DrivingMode|Switch_2DrivingMode()/\l&nbsp;&nbsp;&nbsp;ModeOperation(DRIVING);\l}", style=filled , fillcolor=lavender];
 
         "BatteryCoolingMap::ChargingMode"
-            [label="{ChargingMode|Switch_2ChargingMode()/\l&nbsp;&nbsp;&nbsp;ModeOperation(CHARGING);\l}"];
+            [label="{ChargingMode|Switch_2ChargingMode()/\l&nbsp;&nbsp;&nbsp;ModeOperation(CHARGING);\l}", style=filled , fillcolor=lavender];
 
         "BatteryCoolingMap::DrivingCoolingReady"
-            [label="{DrivingCoolingReady}"];
+            [label="{DrivingCoolingReady}", style=filled , fillcolor=palegreen];
 
         "BatteryCoolingMap::RunningDrivingCooling"
-            [label="{RunningDrivingCooling|Run()/\l&nbsp;&nbsp;&nbsp;CoolingOperation(DRIVING);\l}"];
+            [label="{RunningDrivingCooling|Run()/\l&nbsp;&nbsp;&nbsp;CoolingOperation(DRIVING);\l}", style=filled , fillcolor=paleturquoise];
 
         "BatteryCoolingMap::ChargingCoolingReady"
-            [label="{ChargingCoolingReady}"];
+            [label="{ChargingCoolingReady}", style=filled , fillcolor=palegreen];
 
         "BatteryCoolingMap::RunningChargingCooling"
-            [label="{RunningChargingCooling|Run()/\l&nbsp;&nbsp;&nbsp;CoolingOperation(CHARGING);\l}"];
+            [label="{RunningChargingCooling|Run()/\l&nbsp;&nbsp;&nbsp;CoolingOperation(CHARGING);\l}", style=filled , fillcolor=paleturquoise];
 
         "%start"
             [label="" shape=circle style=filled fillcolor=black width=0.25];
